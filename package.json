@@ -25,10 +25,12 @@
     "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
+    "@react-native-community/cli": "latest",
     "@babel/core": "^7.25.2",
     "@types/react": "~18.3.12",
     "expo-module-scripts": "^4.0.4",
     "typescript": "^5.3.3"
+    
   },
   "private": true
 }
