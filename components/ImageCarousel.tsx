@@ -13,7 +13,7 @@ const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
     scrollViewRef.current?.scrollTo({x:width*index,animated:true})
   }
   return (
-    <View>
+    <View >
     <ScrollView
     ref={scrollViewRef}
       style={styles.box}
@@ -33,7 +33,7 @@ const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
     </ScrollView>
 
     <FlatList
-    style={{marginHorizontal:100}}
+    style={{marginHorizontal:width*0.15,marginVertical:-10}}
     data={images}
     horizontal
     showsHorizontalScrollIndicator={false}
