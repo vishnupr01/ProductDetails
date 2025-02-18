@@ -6,6 +6,7 @@ import { fetchProductDetails } from "../api/productApi";
 import { ProductTitle } from "../components/ProductTitle";
 import { ScrollView } from "react-native-gesture-handler";
 import ColorOptions from "../components/colorOptions";
+import { ExpandableSection } from "../components/ExpandableSection";
 
 export const ProductDetailScreen=()=>{
   const [product,setProduct] = useState<any>(null)
@@ -30,6 +31,9 @@ export const ProductDetailScreen=()=>{
       <View style={styles.colorSection}>
           <Text style={styles.sectionTitle}>Colors</Text>
           <ColorOptions colors={product.variants} />
+        </View>
+        <View>
+          <ExpandableSection description ={product.description.long} dimensions={product.dimensions} imageSource={product.description.image} />
         </View>
     </View>
     </ScrollView>
