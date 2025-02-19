@@ -33,7 +33,7 @@ const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
     </ScrollView>
 
     <FlatList
-    style={{marginHorizontal:width*0.15,marginVertical:-10}}
+    style={{marginHorizontal:width*0.20,marginVertical:-10}}
     data={images}
     horizontal
     showsHorizontalScrollIndicator={false}

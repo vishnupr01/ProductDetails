@@ -1,10 +1,15 @@
 import { View, Text, StyleSheet } from "react-native";
 import { ProductTitleProps } from "../interfaces/productDescription";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 export const ProductTitle = ({ product }: ProductTitleProps) => {
   return (
     <View>
+      <View style={{justifyContent:"space-between",flexDirection:"row"}}>
       <Text style={[styles.marginSet, styles.titleFont]}>{product.name}</Text>
+      <Feather name="share" size={22} color="black" style={{marginRight:10,paddingTop:5}} />
+                    </View>
       <View style={[styles.marginSet, styles.priceContainer]}>
         <Text style={styles.prizeFont}>${product.price.current.toFixed(2)} </Text>
         {product.price.discount && (
@@ -15,6 +20,16 @@ export const ProductTitle = ({ product }: ProductTitleProps) => {
             <Text style={styles.discountText}>{product.price.discount}</Text>
           </View>
         )}
+      </View>
+      <View style={{flexDirection:"row"}}>
+            <MaterialCommunityIcons
+                      style={{ marginHorizontal: 8 }}
+                      name="star"
+                      size={20}
+                      color="#f4a900"
+                    />
+        <Text>{product.rating.score}({product.rating.totalReviews})</Text>
+
       </View>
       <View>
         <Text style={[styles.descriptionFont,styles.marginSet]}>
