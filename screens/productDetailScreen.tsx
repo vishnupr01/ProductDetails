@@ -8,17 +8,25 @@ import { ScrollView } from "react-native-gesture-handler";
 import ColorOptions from "../components/colorOptions";
 import { ExpandableSection } from "../components/ExpandableSection";
 import { ReviewExtension } from "../components/ReviewSection";
+import { ProductScroller } from "../components/ProductScroller";
+import StickyFooter from "../components/StickyFooter";
 
 export const ProductDetailScreen=()=>{
   const [product,setProduct] = useState<any>(null)
+  const [selectedVariant,setSelectedVariant] = useState<any>(null)
   useEffect(()=>{
     const loadData=async()=>{
       const data = await fetchProductDetails()
       setProduct(data.product)
+      setSelectedVariant(data.product.variants[0])
     }
     loadData()
   },[])
   if(!product) return <Text>Loading...</Text>
+  const handleColorChange=(colorName:string)=>{
+    const variant= product.variants.find((v:any)=>v.name===colorName)
+    setSelectedVariant(variant)
+  }
   const shareProduct=async()=>{
     await Share.share({message:`check out this product:${product.name}`})
   }
@@ -26,17 +34,21 @@ export const ProductDetailScreen=()=>{
     <ScrollView>
     <View style={styles.top} >
       
-      <BestSellerTag />
+      {/* <BestSellerTag /> */}
       <ImageCarousel images={product.images.gallery}/>
-      <ProductTitle product={product}/>
+      <ProductTitle product={product} variant={selectedVariant}/>
       <View style={styles.colorSection}>
           <Text style={styles.sectionTitle}>Colors</Text>
-          <ColorOptions colors={product.variants} />
+          <ColorOptions colors={product.variants} onSelectColor={handleColorChange}  />
         </View>
         <View>
           <ExpandableSection description ={product.description.long} dimensions={product.dimensions} imageSource={product.description.image} />
         </View>
         <ReviewExtension reviews={product.reviews.summary} reviewers={product.reviews.items} />
+        <ProductScroller products={product.frequentlyBoughtWith}/>
+       
+        <StickyFooter />
+        
     </View>
     </ScrollView>
   )

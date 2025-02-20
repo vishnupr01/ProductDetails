@@ -1,43 +1,48 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 const BestSellerTag: React.FC = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.triangle} />
-      <Text style={styles.text}>Best Seller</Text>
-      <View style={styles.triangle} />
+      <View style={styles.ribbon}>
+        <Text style={styles.text}>Best Seller</Text>
+      </View>
+      <View style={styles.ribbonTriangle} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical:40,
-    backgroundColor: "red",
-    paddingVertical: 5,
-    paddingHorizontal: 25,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ribbon: {
+    backgroundColor: '#ce2029', // Red background
+    paddingVertical: 4,
+    paddingHorizontal: 12,
     borderRadius: 4,
-    position: "relative",
-    alignSelf: "flex-start", // Ensures it wraps content
+    position: 'relative',
   },
   text: {
-    color: "#fff",
-    fontSize: 13,
-    lineHeight: 26,
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
-  triangle: {
-    position: "absolute",
-    right: -8,
-    top: 8,
-    width: 2,
+  ribbonTriangle: {
+    position: 'absolute',
+    left: 80, // Move it to the left
+    top: '30%',
+    transform: [{ translateY: -5 }],
+    width: 0,
     height: 0,
-    borderLeftWidth: 10,
+    borderRightWidth: 10, // Flip the direction
+    borderRightColor: 'transparent',
     borderTopWidth: 10,
-    borderBottomWidth: 15,
-    borderLeftColor: "red",
-    borderTopColor: "transparent",
-    borderBottomColor: "transparent",
+    borderTopColor: '#E91E63',
+    borderBottomWidth: 10,
+    borderBottomColor: '#E91E63',
   },
 });
 
