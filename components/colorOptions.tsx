@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface ColorOptionsProps {
   colors: { name: string; colorCode: string }[];
+  onSelectColor: (colorName: string) => void; 
 }
 
-const ColorOptions = ({ colors }: ColorOptionsProps) => {
+const ColorOptions = ({ colors,onSelectColor }: ColorOptionsProps) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   return (
@@ -19,7 +20,7 @@ const ColorOptions = ({ colors }: ColorOptionsProps) => {
               styles.colorBox,
               selectedColor === color.name && styles.selectedBorder,
             ]}
-            onPress={() => setSelectedColor(color.name)}
+            onPress={() => {setSelectedColor(color.name); onSelectColor(color.name)}}
           >
             {/* Small colored square inside */}
             <View style={[styles.smallBox, { backgroundColor: color.colorCode }]} />
@@ -37,7 +38,7 @@ const ColorOptions = ({ colors }: ColorOptionsProps) => {
               styles.colorBox,
               selectedColor === color.name && styles.selectedBorder,
             ]}
-            onPress={() => setSelectedColor(color.name)}
+            onPress={() => {setSelectedColor(color.name); onSelectColor(color.name)}}
           >
             {/* Small colored square inside */}
             <View style={[styles.smallBox, { backgroundColor: color.colorCode }]} />

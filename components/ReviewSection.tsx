@@ -1,14 +1,36 @@
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList,
+  TextInput,Modal,Alert
+ } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ReviewItem } from "./ReviewItem";
+import { useState } from "react";
 
 export const ReviewExtension = ({ reviews, reviewers }: any) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [rating, setRating] = useState(0);
+  const [reviewDetails, setReviewDetails] = useState("");
+
+  const handleSubmit = () => {
+    if (!name || !email || rating === 0 || !reviewDetails) {
+      Alert.alert("Error", "Please fill all fields and select a rating.");
+      return;
+    }
+    
+    setModalVisible(false);
+    Alert.alert("Success", "Your review has been submitted!");
+    setName("");
+    setEmail("");
+    setRating(0);
+    setReviewDetails("");
+  };
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.tile}>Reviews</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Text style={styles.addReview}>+Add Review</Text>
         </TouchableOpacity>
       </View>
@@ -63,6 +85,63 @@ export const ReviewExtension = ({ reviews, reviewers }: any) => {
           <ReviewItem review={item} />
         </View>
       ))}
+      <Modal visible={modalVisible} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Add a Review</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Your Name"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Your Email"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+
+            <Text style={styles.label}>Select Rating</Text>
+            <View style={styles.ratingSelector}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <TouchableOpacity key={star} onPress={() => setRating(star)}>
+                  <MaterialCommunityIcons
+                    name={star <= rating ? "star" : "star-outline"}
+                    size={30}
+                    color="#0d6d51"
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="Write your review"
+              multiline
+              value={reviewDetails}
+              onChangeText={setReviewDetails}
+            />
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity
+                style={[styles.button, styles.submitButton]}
+                onPress={handleSubmit}
+              >
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
     </View>
   );
@@ -141,6 +220,63 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: "#0d6d51",
     borderRadius: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  textArea: {
+    height: 80,
+    textAlignVertical: "top",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  ratingSelector: {
+    flexDirection: "row",
+    marginBottom: 15,
+  },
+  modalActions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    width: "45%",
+  },
+  submitButton: {
+    backgroundColor: "#0d6d51",
+  },
+  cancelButton: {
+    backgroundColor: "#ccc",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
 

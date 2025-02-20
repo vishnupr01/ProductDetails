@@ -28,9 +28,20 @@ interface Product {
   rating: Rating;
   description: Description;
 }
+interface Variant {
+  name: string;
+  colorCode: string;
+  price: {
+    current: number;
+    original: number;
+    discount: string;
+    currencyCode: string;
+  };
+}
 
 export interface ProductTitleProps {
   product: Product;
+  variant:Variant
 }
 export interface ColorOptionsProps{
   colors:{name:string;hex:string}[]
